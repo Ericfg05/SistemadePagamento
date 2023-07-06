@@ -13,13 +13,12 @@ import conexão.Conexao;
 import model.Usuario;
 
 public class DaoUsuario {
-	public class UsuarioDao {
 		private static Connection conexao = Conexao.getConexao();
 
 		public static Usuario inserir( Usuario usuario) {
 
 
-			String sql = "INSERT INTO usuario (usuario,senha) VALUES (?,?)";
+			String sql = "INSERT INTO Usuario (usuario,senha) VALUES (?,?)";
 			try {
 				PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				stmt.setString(1, usuario.getNome());
@@ -37,23 +36,23 @@ public class DaoUsuario {
 			}
 		}
 		public ResultSet autenticarUsuario(Usuario usuario) {
-				try {
-					String sql = "SELECT * FROM usuario WHERE usuario = ? and senha = ?";
-					PreparedStatement stmt = conexao.prepareStatement(sql);
-					stmt.setString(1,usuario.getNome());
-					stmt.setString(2, usuario.getSenha()); 
-					ResultSet rs = stmt.executeQuery();
-					
-					
-					return rs;
-				}catch (SQLException erro) {
-					JOptionPane.showMessageDialog(null,"UsuarioDao: " + erro);
-				}
-				return null;
-				}
+			try {
+				String sql = "SELECT * FROM Usuario WHERE nome = ? and senha = ?";
+				PreparedStatement stmt = conexao.prepareStatement(sql);
+				stmt.setString(1,usuario.getNome());
+				stmt.setString(2, usuario.getSenha()); 
+				ResultSet rs = stmt.executeQuery();
+				
+				
+				return rs;
+			}catch (SQLException erro) {
+				JOptionPane.showMessageDialog(null,"DaoUsuario: " + erro);
+			}
+			return null;
+			}
 		
 		public Usuario buscarPorId(int id) {
-			String sql = "SELECT * FROM usuario WHERE id = ?";
+			String sql = "SELECT * FROM Usuario WHERE id = ?";
 			
 			try {
 				
@@ -64,7 +63,7 @@ public class DaoUsuario {
 				
 				rs.next();
 				
-				Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("usuario"),rs.getString("senha"));
+				Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nome"),rs.getString("senha"));
 				
 				return usuario;	
 			}catch (Exception e) {
@@ -76,13 +75,13 @@ public class DaoUsuario {
 			
 
 		public static ArrayList<Usuario> listarTodos() {
-			String sql = "SELECT * FROM usuario";
+			String sql = "SELECT * FROM Usuario";
 			try {
 				PreparedStatement stmt = conexao.prepareStatement(sql);
 				ResultSet rs = stmt.executeQuery();
 				ArrayList<Usuario> usuarios = new ArrayList<>();
 				while (rs.next()) {
-					Usuario a = new Usuario(rs.getInt("id"), rs.getString("usuario"),rs.getString("senha"));
+					Usuario a = new Usuario(rs.getInt("id"), rs.getString("nome"),rs.getString("senha"));
 					usuarios.add(a);
 				}
 				stmt.close();
@@ -93,4 +92,5 @@ public class DaoUsuario {
 		}
 	}
 
-}
+
+

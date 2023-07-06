@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Conexao {
-	public static final String SERVIDOR = "jdbc:mariadb://localhost:3308/controle_emprestimo";
+	public static final String SERVIDOR = "jdbc:mariadb://localhost:3307/Pagamento";
 	public static final String USUARIO = "root";
 	public static final String SENHA = "123";
 
